@@ -22,22 +22,31 @@ graph LR
     %% ===
     %% LAUNCH VEHICLE
     %% ---
+    Pl --> LV[Launch Vehicle]:::entity
+    LV --- Isa[is one of]:::relation
+
+    %% ===
+    %% LAUNCH VEHICLE TYPE
+    %% ---
     %% Rule: Each launch vehicle is of a specific launch vehicle type. The name, maximum thrust and whether it is reusable need to be recorded for the launch vehicle type.
     %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
-    Pl --> LV[Launch Vehicle]:::entity
+    LVT[Launch Vehicle Type]:::entity --- Mb{made by}:::relation
+    Isa ---> LVT
 
     %% ===
     %% PAYLOAD
     %% ---
     %% Rule: Each launch carries one payload, and a payload is only carried by one launch.
+    %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
     Cp --> P[Payload]:::entity
-    P --- Mk{makes}:::relation
+    P --- Mb
 
     %% ===
     %% Manufacturer
     %% ---
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
-    Mk --> M[Manufacturer]:::entity
+    %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
+    Mb --> M[Manufacturer]:::entity
 
     %% ===
     %% CREW

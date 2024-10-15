@@ -4,12 +4,12 @@
   "main": "''",
   "scripts": {
     "clean": "rm -rf output",
-    "predev:erdcreate": "mmdc -i src/erd.mmd -o src/erd.svg",
-    "predev:erdstyle": "node ./scripts/style-svg.js src/erd.svg src/erd.css",
+    "predev:erdcreate": "mmdc -i src/erd.mmd -o output/erd.svg",
+    "predev:erdstyle": "node ./scripts/style-svg.js output/erd.svg src/erd.css",
     "predev": "npm run predev:erdcreate && npm run predev:erdstyle",
-    "dev": "grip src/hw_1_4.md",
+    "dev": "grip .",
     "prebuild": "npm run clean && mkdir output && pm2 --name render start npm -- run dev 0.0.0.0:6418",
-    "build": "node ./scripts/generate-pdf.js http://0.0.0.0:6418 output/hw_1_4.pdf",
+    "build": "node ./scripts/generate-pdf.js http://0.0.0.0:6418/src/hw_1_4.md output/hw_1_4.pdf",
     "postbuild": "pm2 delete render"
   },
   "repository": {
