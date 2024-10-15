@@ -5,6 +5,8 @@ graph LR
     %% Rule: A launchpad hosts multiple launches over time, and each launch is hosted by exactly one launchpad. Therefore, Launchpads will be created in the database even before the first launch is hosted there.
     %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
     %% Rule: Each launchpad has a name and a location.
+    LP[Launch Pad]:::entity ~~~ H{hosts}:::relation --> LP
+    LP --- Lli{located in}:::relation
 
     %% ===
     %% LAUNCH
@@ -12,18 +14,30 @@ graph LR
     %% Rule: A launch requires a launchpad that hosts it, a launch vehicle (the rocket), and the payload.
     %% Rule: For a launch, the date, time and name should be recorded as well as whether it is a crewed launch or not.
     %% Rule: Each launch is performed by a launch vehicle. The serial number for the launch vehicle should be recorded. A launch vehicle can perform multiple launches over time.
+    H --- L[Launch]:::entity
+    L --- Pl{performs}:::relation
+    L ~~~ Cp{carries}:::relation --> L
+    L --- Pa
 
     %% ===
     %% LAUNCH VEHICLE
     %% ---
     %% Rule: Each launch vehicle is of a specific launch vehicle type. The name, maximum thrust and whether it is reusable need to be recorded for the launch vehicle type.
     %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
+    Pl --> LV[Launch Vehicle]:::entity
 
     %% ===
     %% PAYLOAD
     %% ---
     %% Rule: Each launch carries one payload, and a payload is only carried by one launch.
+    Cp --> P[Payload]:::entity
+    P --- Mk{makes}:::relation
+
+    %% ===
+    %% Manufacturer
+    %% ---
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
+    Mk --> M[Manufacturer]:::entity
 
     %% ===
     %% CREW
@@ -31,6 +45,18 @@ graph LR
     %% Rule: Multiple crew members can be carried on a crewed launch, and each crew member can be carried on multiple launches over time.
     %% Rule: Each crew member has a nationality (the country they come from), and their name and surname also need to be recorded.
     %% Rule: Crew members can appear in the database before they launch for the first time
+    Pa{participates in}:::relation --- C[Crew member]:::entity
+    C --- If{is from}:::relation
+
+    %% ===
+    %% COUNTRY
+    %% ---
+    %% Rule: Each crew member has a nationality (the country they come from), and their name and surname also need to be recorded.
+    %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
+    If --> Cu
+    Lli --> Cu
+    Cu[Country]:::entity --- Li{located in}:::relation
+    Li --> Co[Continent]:::entity
 
     %% ===
     %% STYLES

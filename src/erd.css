@@ -1,0 +1,19 @@
+#my-svg {
+  font-size: 12px;
+}
+
+.weakEntity,
+.weakRelation {
+  filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white)
+    drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)
+    drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black)
+    drop-shadow(0 -1px 0 black) drop-shadow(0 1px 0 black);
+}
+
+.edge-thickness-thick {
+  filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white)
+    drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)
+    drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black)
+    drop-shadow(0 -1px 0 black) drop-shadow(0 1px 0 black);
+  stroke: white !important;
+}

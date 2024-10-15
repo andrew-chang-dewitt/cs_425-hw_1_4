@@ -4,11 +4,12 @@
   "main": "''",
   "scripts": {
     "clean": "rm -rf output",
-    "predev:erd": "mmdc -i src/erd.mmd -o src/erd.svg",
-    "predev": "npm run predev:erd",
-    "dev": "grip src/hw_1_4.md 0.0.0.0",
-    "prebuild": "npm run clean && mkdir output && pm2 --name render start npm -- run dev",
-    "build": "node ./scripts/generate-pdf.js http://0.0.0.0:6419 output/hw_1_4.pdf",
+    "predev:erdcreate": "mmdc -i src/erd.mmd -o src/erd.svg",
+    "predev:erdstyle": "node ./scripts/style-svg.js src/erd.svg src/erd.css",
+    "predev": "npm run predev:erdcreate && npm run predev:erdstyle",
+    "dev": "grip src/hw_1_4.md",
+    "prebuild": "npm run clean && mkdir output && pm2 --name render start npm -- run dev 0.0.0.0:6418",
+    "build": "node ./scripts/generate-pdf.js http://0.0.0.0:6418 output/hw_1_4.pdf",
     "postbuild": "pm2 delete render"
   },
   "repository": {
@@ -23,8 +24,9 @@
   "homepage": "https://github.com/andrew-chang-dewitt/cs_425-hw_1_4#readme",
   "description": "",
   "devDependencies": {
-    "@mermaid-js/mermaid-cli": "^11.2.1",
-    "mermaid": "^10.9.1",
+    "@mermaid-js/mermaid-cli": "10.9.1",
+    "jsdom": "^25.0.1",
+    "mermaid": "10.9.1",
     "pm2": "^5.4.2",
     "puppeteer": "^23.5.3"
   }

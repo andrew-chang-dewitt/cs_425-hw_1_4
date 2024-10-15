@@ -27,12 +27,12 @@ const getPDF = async (url) => {
   console.debug(`Printing page as pdf...`);
   const pdf = await page.pdf({
     format: "Letter",
-    margin: {
-      top: "0.3 in",
-      bottom: "0.2 in",
-      right: "0.3 in",
-      left: "0.3 in",
-    },
+    // margin: {
+    //   top: "0.3 in",
+    //   bottom: "0.2 in",
+    //   right: "0.3 in",
+    //   left: "0.3 in",
+    // },
   });
   console.debug("Page printed.");
 
