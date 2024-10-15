@@ -1,0 +1,25 @@
+{
+  "name": "hw_1_4",
+  "version": "1.0.0",
+  "main": "''",
+  "scripts": {
+    "build:erd": "mmdc -i erd.mmd -o erd.svg",
+    "build": "build:erd",
+    "serve": "grip hw_1_4.md 0.0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrew-chang-dewitt/cs_425-hw_1_4.git"
+  },
+  "author": "Kels Cavin, Peter Capuzzi, Andrew Chang-DeWitt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andrew-chang-dewitt/cs_425-hw_1_4/issues"
+  },
+  "homepage": "https://github.com/andrew-chang-dewitt/cs_425-hw_1_4#readme",
+  "description": "",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.2.1",
+    "mermaid": "^10.9.1"
+  }
+}
