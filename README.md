@@ -5,7 +5,7 @@ Drawing an ERD & writing Relation Schema from business rules, using a given exam
 
 ## File organization
 
-Final pdf output in `./output`, generated from markdown & mermaid files in `./src`.
+Final pdf output in `./output`, generated from markdown (source at [`./src/hw_1_4.md`](src/hw_1_4.md))& mermaid files ([`./src/erd.mmd`](src/erd.mmd)).
 
 ## Contributing
 
