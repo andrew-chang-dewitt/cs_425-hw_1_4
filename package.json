@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "main": "''",
   "scripts": {
-    "build:erd": "mmdc -i erd.mmd -o erd.svg",
-    "build": "build:erd",
-    "serve": "grip hw_1_4.md 0.0.0.0"
+    "clean": "rm -rf output",
+    "predev:erd": "mmdc -i src/erd.mmd -o src/erd.svg",
+    "predev": "npm run predev:erd",
+    "dev": "grip src/hw_1_4.md 0.0.0.0",
+    "prebuild": "npm run clean && mkdir output && pm2 --name render start npm -- run dev",
+    "build": "node ./scripts/generate-pdf.js http://0.0.0.0:6419 output/hw_1_4.pdf",
+    "postbuild": "pm2 delete render"
   },
   "repository": {
     "type": "git",
@@ -20,6 +24,8 @@
   "description": "",
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.2.1",
-    "mermaid": "^10.9.1"
+    "mermaid": "^10.9.1",
+    "pm2": "^5.4.2",
+    "puppeteer": "^23.5.3"
   }
 }
