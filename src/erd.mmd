@@ -3,43 +3,54 @@ graph LR
     %% LAUNCHPAD
     %% ---
     %% Rule: A launchpad hosts multiple launches over time, and each launch is hosted by exactly one launchpad. Therefore, Launchpads will be created in the database even before the first launch is hosted there.
+    LP[Launch Pad]:::entity ~~~ H{hosts}:::weakRelation --> LP
+    H ~~~ LP
     %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
+    LP === Lli{located in}:::relation
+    lpl(location):::attr --- Lli
     %% Rule: Each launchpad has a name and a location.
-    LP[Launch Pad]:::entity ~~~ H{hosts}:::relation --> LP
-    LP --- Lli{located in}:::relation
+    lpn(name):::pk --- LP
 
     %% ===
     %% LAUNCH
     %% ---
     %% Rule: A launch requires a launchpad that hosts it, a launch vehicle (the rocket), and the payload.
-    %% Rule: For a launch, the date, time and name should be recorded as well as whether it is a crewed launch or not.
+    H === L[Launch]:::weakEntity
+    L === Pa
     %% Rule: Each launch is performed by a launch vehicle. The serial number for the launch vehicle should be recorded. A launch vehicle can perform multiple launches over time.
-    H --- L[Launch]:::entity
-    L --- Pl{performs}:::relation
-    L ~~~ Cp{carries}:::relation --> L
-    L --- Pa
+    L === Pl{performs}:::relation
+    %% Rule: For a launch, the date, time and name should be recorded as well as whether it is a crewed launch or not.
+    L ~~~ Cp{carries}:::relation ==> L
+    Cp ~~~ L
+    ld(date):::disc --- L
+    lt(time):::disc --- L
+    ln(name):::disc --- L
 
     %% ===
     %% LAUNCH VEHICLE
     %% ---
-    Pl --> LV[Launch Vehicle]:::entity
-    LV --- Isa[is one of]:::relation
+    lvsn(serial_num):::disc --- LV
+    Pl --> LV[Launch Vehicle]:::weakEntity
+    LV === Isa[is one of]:::weakRelation
 
     %% ===
     %% LAUNCH VEHICLE TYPE
     %% ---
-    %% Rule: Each launch vehicle is of a specific launch vehicle type. The name, maximum thrust and whether it is reusable need to be recorded for the launch vehicle type.
     %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
-    LVT[Launch Vehicle Type]:::entity --- Mb{made by}:::relation
+    LVT[Launch Vehicle Type]:::entity === Mb{made by}:::relation
+    %% Rule: Each launch vehicle is of a specific launch vehicle type. The name, maximum thrust and whether it is reusable need to be recorded for the launch vehicle type.
     Isa ---> LVT
+    lvtn(name):::pk --- LVT
+    lvtt(maximum_thrust):::attr --- LVT
+    lvtr(reusable):::attr --- LVT
 
     %% ===
     %% PAYLOAD
     %% ---
     %% Rule: Each launch carries one payload, and a payload is only carried by one launch.
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
-    Cp --> P[Payload]:::entity
-    P --- Mb
+    Cp ==> P[Payload]:::entity
+    P === Mb
 
     %% ===
     %% Manufacturer
@@ -56,13 +67,15 @@ graph LR
     %% Rule: Crew members can appear in the database before they launch for the first time
     Pa{participates in}:::relation --- C[Crew member]:::entity
     C --- If{is from}:::relation
+    cn(name):::pk --- C
+    cs(surname):::pk --- C
 
     %% ===
     %% COUNTRY
     %% ---
     %% Rule: Each crew member has a nationality (the country they come from), and their name and surname also need to be recorded.
-    %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
     If --> Cu
+    %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
     Lli --> Cu
     Cu[Country]:::entity --- Li{located in}:::relation
     Li --> Co[Continent]:::entity
@@ -72,10 +85,11 @@ graph LR
     %% ---
     classDef entity,weakEntity fill:#c6e0b4;
     classDef relation,weakRelation fill:#9dc3e5;
-    classDef attr,subAttr,derAttr fill:#fbf49b;
+    classDef attr,subAttr,derAttr,pk,disc fill:#fbf49b;
     classDef subAttr,derAttr stroke:red;
     classDef derAttr stroke-dasharray: 10 5;
     classDef pk text-decoration: underline;
+    classDef disc text-decoration: underline dashed;
     %% optional attr links
     %% FIXME: change numbers to correct links below & uncomment
     %% linkStyle 1,4,26,39,45,51,65 stroke:red, stroke-dasharray: 10 5;
