@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "prebuild": "npm run clean && mkdir output && pm2 --name render start npm -- run dev --port 6418",
-    "build": "node ./scripts/generate-pdf.js http://localhost:6418/src/hw_1_4.md output/hw_1_4.pdf",
+    "clean": "rm -rf dist",
+    "dev": "vite --host 0.0.0.0 --port 6419",
+    "prebuild": "npm run clean && mkdir dist && pm2 --name render start vite -- --port 6418",
+    "build": "node ./scripts/generate-pdf.js http://localhost:6418 dist/hw_1_4.pdf",
     "postbuild": "pm2 delete render"
   },
   "repository": {

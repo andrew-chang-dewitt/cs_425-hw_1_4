@@ -1,6 +1,9 @@
-const path = require("path");
-const { writeFile } = require("fs").promises;
-const puppeteer = require("puppeteer");
+import path from "path";
+import { promises } from "fs";
+import puppeteer from "puppeteer";
+
+const __dirname = import.meta.dirname;
+const { writeFile } = promises;
 
 const getPDF = async (url) => {
   console.info(
