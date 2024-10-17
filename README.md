@@ -5,7 +5,7 @@ Drawing an ERD & writing Relation Schema from business rules, using a given exam
 
 ## File organization
 
-Final pdf output in `./output`, generated from markdown (source at [`./src/hw_1_4.md`](src/hw_1_4.md))& mermaid files ([`./src/erd.mmd`](src/erd.mmd)).
+Final pdf output in `./dist`, generated from markdown (source at [`./src/hw_1_4.md`](src/hw_1_4.md))& mermaid files ([`./src/erd.mmd`](src/erd.mmd)).
 
 ## Contributing
 
@@ -24,3 +24,5 @@ npm run build
 ```
 
 Updated pdf should be located at `./output/hw_1_4.pdf`.
+
+If you want a live view of the webpage the pdf is printed from during build, you can run `npm run dev` and navigate to `localhost:6149` to see your changes as you make them. This utilizes the same mermaid version & custom styles that the build scripts use, so it will be a more accurate picture of the erd & html/pdf styles from the sources than a general markdown preview tool, such as your IDE's built-in one.
