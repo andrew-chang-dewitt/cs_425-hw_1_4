@@ -1,19 +1,13 @@
-#my-svg {
-  font-size: 12px;
+#erd-svg {
+    font-size: 12px;
 }
 
-.weakEntity,
-.weakRelation {
-  filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white)
-    drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)
-    drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black)
-    drop-shadow(0 -1px 0 black) drop-shadow(0 1px 0 black);
+#erd-svg .weakEntity,
+#erd-svg .weakRelation {
+    filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white) drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black) drop-shadow(0 -1px 0 black) drop-shadow(0 1px 0 black);
 }
 
-.edge-thickness-thick {
-  filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white)
-    drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white)
-    drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black)
-    drop-shadow(0 -1px 0 black) drop-shadow(0 1px 0 black);
-  stroke: white !important;
+#erd-svg .edge-thickness-thick {
+    filter: drop-shadow(1px 0 0 white) drop-shadow(-1px 0 0 white) drop-shadow(0 1px 0 white) drop-shadow(0 -1px 0 white) drop-shadow(1px 0 0 black) drop-shadow(-1px 0 0 black) drop-shadow(0 -1px 0 black) drop-shadow(0 1px 0 black);
+    stroke: white !important;
 }
