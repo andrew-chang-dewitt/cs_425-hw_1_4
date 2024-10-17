@@ -192,10 +192,7 @@ h1 {
   }
 
   html {
-    font-size: 12px;
-  }
-  .markdown-body {
-    font-size: 12pt !important;
+    font-size: 10px;
   }
 
   h4 {
