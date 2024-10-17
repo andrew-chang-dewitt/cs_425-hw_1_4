@@ -191,8 +191,9 @@ h1 {
     margin-top: 0;
   }
 
+  .markdown-body,
   html {
-    font-size: 10px;
+    font-size: 12px !important;
   }
 
   h4 {
