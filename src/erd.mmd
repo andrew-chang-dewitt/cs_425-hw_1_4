@@ -26,8 +26,7 @@ graph LR
     CP ~~~ L
     %% Rule: A launch requires ... a launch vehicle (The rocket) ...
     %% Rule: Each launch is performed by a launch vehicle. The serial number for the launch vehicle should be recorded. A launch vehicle can perform multiple launches over time.
-    L ~~~ LB{launched by}:::relation ==> L
-    LB ~~~ L
+    L === LB{launched by}:::relation
     %% Rule: For a launch, the date, time and name should be recorded as well as whether it is a crewed launch or not.
     ld(Date):::attr --- L
     lt(Time):::attr --- L
@@ -39,7 +38,7 @@ graph LR
     %% LAUNCH VEHICLE
     %% ---
     %% Rule: Each launch is performed by a launch vehicle. The serial number for the launch vehicle should be recorded. A launch vehicle can perform multiple launches over time.
-    LB ---- LV[Launch Vehicle]:::weakEntity
+    LB ---> LV[Launch Vehicle]:::weakEntity
     lvsn(VehicleSerialNum):::disc --- LV
     %% Rule: A launch requires ... a launch vehicle (The rocket) ... .
     LV === Isa{is one of}:::weakRelation
