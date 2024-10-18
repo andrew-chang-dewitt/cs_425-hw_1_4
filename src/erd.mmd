@@ -3,58 +3,56 @@ graph LR
     %% LAUNCHPAD
     %% ---
     %% Rule: A launchpad hosts multiple launches over time, and each launch is hosted by exactly one launchpad. Therefore, Launchpads will be created in the database even before the first launch is hosted there.
-    LP[Launch Pad]:::entity ~~~ H{hosts}:::weakRelation --> LP
+    LP[LaunchPad]:::entity ~~~ H{hosts}:::weakRelation --> LP
     H ~~~ LP
     %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
     LP === Lli{located in}:::relation
     %% Rule: Each launchpad has a name and a location.
-    lpn([name]):::attr --- LP
-    lpid([launchpadID]):::pk --- LP
-    lplo([location]):::attr --- LP
-    style lplo stroke-dasharray: 5 5
+    lpid(launchPadID):::pk --- LP
+    lpn(name):::attr --- LP
+    lplo(location):::derAttr --- LP
+
     %% ===
     %% LAUNCH
     %% ---
     %% Rule: A launch requires a launchpad that hosts it, a launch vehicle (the rocket), and the payload.
-    H === L[Launch]:::weakEntity
-    L === Pa
+    LP ~~~ L{Launch}:::relation --> LP
+    L ~~~ LP
+    L ===> Pa
     %% Rule: Each launch is performed by a launch vehicle. The serial number for the launch vehicle should be recorded. A launch vehicle can perform multiple launches over time.
-    L === Pl{performs}:::relation
+    L --- LV
     %% Rule: For a launch, the date, time and name should be recorded as well as whether it is a crewed launch or not.
-    L ~~~ Cp{carries}:::relation ==> L
-    Cp ~~~ L
-    lid([launchID]):::pk --- L
-    ld([date]):::attr --- L
-    lt([time]):::attr --- L
-    ln([name]):::attr --- L
+    L --- C
+    ld(date):::attr --- L
+    lt(time):::attr --- L
+    ln(name):::attr --- L
+    lc(crewed):::attr --- L
 
     %% ===
     %% LAUNCH VEHICLE
     %% ---
-    lvsn([serial_num]):::disc --- LV
-    lvid([launchvehicleID]):::pk --- LV
     Pl --> LV[Launch Vehicle]:::weakEntity
     LV === Isa{is one of}:::weakRelation
+    lvsn(serialNum):::disc --- LV
 
     %% ===
     %% LAUNCH VEHICLE TYPE
     %% ---
     %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
-    LVT[Launch Vehicle Type]:::entity === Mb{made by}:::relation
+    LVT[Launch Vehicle Type]:::entity === Mb{made by}:::weakRelation
     %% Rule: Each launch vehicle is of a specific launch vehicle type. The name, maximum thrust and whether it is reusable need to be recorded for the launch vehicle type.
     Isa ---> LVT
-    lvtn([name]):::attr --- LVT
-    lvtt([maximum_thrust]):::attr --- LVT
-    lvtr([reusable]):::attr --- LVT
-    lvtid([launchvehicletypeid]):::pk --- LVT
+    lvtn(name):::disc --- LVT
+    lvtt(maximumThrust):::disc --- LVT
+    lvtr(reusable):::disc --- LVT
+
     %% ===
     %% PAYLOAD
     %% ---
     %% Rule: Each launch carries one payload, and a payload is only carried by one launch.
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
-    Cp ==> P[Payload]:::entity
-    P === Mb
-    plid([payloadID]):::pk --- P
+    P[Payload]:::entity === Mb
+    plid(payloadID):::pk --- P
 
     %% ===
     %% Manufacturer
@@ -62,7 +60,8 @@ graph LR
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
     %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
     Mb --> M[Manufacturer]:::entity
-    mid([manufacturerID]):::pk --- M
+    mid(manufacturerID):::pk --- M
+
     %% ===
     %% CREW
     %% ---
@@ -71,9 +70,9 @@ graph LR
     %% Rule: Crew members can appear in the database before they launch for the first time
     Pa{participates in}:::relation --- C[Crew member]:::entity
     C --- If{is from}:::relation
-    cid([crewmemberID]):::pk --- C
-    cn([name]):::attr --- C
-    cs([surname]):::attr --- C
+    cid(crewMemberID):::pk --- C
+    cn(name):::attr --- C
+    cs(surname):::attr --- C
 
     %% ===
     %% COUNTRY
@@ -84,8 +83,11 @@ graph LR
     Lli --> Cu
     Cu[Country]:::entity --- Li{located in}:::relation
     Li --> Co[Continent]:::entity
-    cuid([countryID]):::pk --- Cu
-    coid([continentID]):::pk --- Co
+    cuid(countryID):::pk --- Cu
+    cun(name):::attr --- Cu
+    coid(continentID):::pk --- Co
+    con(name):::attr --- Co
+
     %% ===
     %% STYLES
     %% ---
