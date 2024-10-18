@@ -44,7 +44,7 @@ const getPDF = async (url) => {
   console.debug(`Page navigating to: '${url}' ...`)
   await retry(async () => {
     await page.goto(url, { waitUntil: "networkidle2" })
-  }, 1000)
+  }, 1000, 10)
   console.debug("Page navigated.")
   console.debug(`Printing page as pdf...`)
   const pdf = await page.pdf({
