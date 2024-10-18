@@ -7,10 +7,11 @@ graph LR
     H ~~~ LP
     %% Rule: A launchpad is located in a country, and a country, in turn, is located on a continent.
     LP === Lli{located in}:::relation
-    lpl(location):::attr --- Lli
     %% Rule: Each launchpad has a name and a location.
-    lpn(name):::pk --- LP
-
+    lpn([name]):::attr --- LP
+    lpid([launchpadID]):::pk --- LP
+    lplo([location]):::attr --- LP
+    style lplo stroke-dasharray: 5 5
     %% ===
     %% LAUNCH
     %% ---
@@ -22,14 +23,16 @@ graph LR
     %% Rule: For a launch, the date, time and name should be recorded as well as whether it is a crewed launch or not.
     L ~~~ Cp{carries}:::relation ==> L
     Cp ~~~ L
-    ld(date):::disc --- L
-    lt(time):::disc --- L
-    ln(name):::disc --- L
+    lid([launchID]):::pk --- L
+    ld([date]):::attr --- L
+    lt([time]):::attr --- L
+    ln([name]):::attr --- L
 
     %% ===
     %% LAUNCH VEHICLE
     %% ---
-    lvsn(serial_num):::disc --- LV
+    lvsn([serial_num]):::disc --- LV
+    lvid([launchvehicleID]):::pk --- LV
     Pl --> LV[Launch Vehicle]:::weakEntity
     LV === Isa{is one of}:::weakRelation
 
@@ -40,10 +43,10 @@ graph LR
     LVT[Launch Vehicle Type]:::entity === Mb{made by}:::relation
     %% Rule: Each launch vehicle is of a specific launch vehicle type. The name, maximum thrust and whether it is reusable need to be recorded for the launch vehicle type.
     Isa ---> LVT
-    lvtn(name):::pk --- LVT
-    lvtt(maximum_thrust):::attr --- LVT
-    lvtr(reusable):::attr --- LVT
-
+    lvtn([name]):::attr --- LVT
+    lvtt([maximum_thrust]):::attr --- LVT
+    lvtr([reusable]):::attr --- LVT
+    lvtid([launchvehicletypeid]):::pk --- LVT
     %% ===
     %% PAYLOAD
     %% ---
@@ -51,6 +54,7 @@ graph LR
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
     Cp ==> P[Payload]:::entity
     P === Mb
+    plid([payloadID]):::pk --- P
 
     %% ===
     %% Manufacturer
@@ -58,7 +62,7 @@ graph LR
     %% Rule: A manufacturer also makes each payload, and a manufacturer can make many different payloads over time.
     %% Rule: A specific manufacturer makes each launch vehicle type, and a manufacturer can make many different launch vehicle types.
     Mb --> M[Manufacturer]:::entity
-
+    mid([manufacturerID]):::pk --- M
     %% ===
     %% CREW
     %% ---
@@ -67,8 +71,9 @@ graph LR
     %% Rule: Crew members can appear in the database before they launch for the first time
     Pa{participates in}:::relation --- C[Crew member]:::entity
     C --- If{is from}:::relation
-    cn(name):::pk --- C
-    cs(surname):::pk --- C
+    cid([crewmemberID]):::pk --- C
+    cn([name]):::attr --- C
+    cs([surname]):::attr --- C
 
     %% ===
     %% COUNTRY
@@ -79,7 +84,8 @@ graph LR
     Lli --> Cu
     Cu[Country]:::entity --- Li{located in}:::relation
     Li --> Co[Continent]:::entity
-
+    cuid([countryID]):::pk --- Cu
+    coid([continentID]):::pk --- Co
     %% ===
     %% STYLES
     %% ---
